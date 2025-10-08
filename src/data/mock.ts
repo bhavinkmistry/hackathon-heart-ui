@@ -62,4 +62,35 @@ export const MOCK_PASSENGERS: Passenger[] = [
       }
     ]
   }
+  ,
+  {
+    id: 'p2',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phone: '+1 555-987-6543',
+    bookingRef: 'XYZ789',
+    loyaltyId: '987654321',
+    flights: [
+      {
+        id: 'f4',
+        number: 'FC999',
+        date: '2025-11-01',
+        from: 'ORD',
+        to: 'MIA',
+        departTime: '07:15',
+        arriveTime: '11:05',
+        status: 'confirmed'
+      },
+      {
+        id: 'f5',
+        number: 'FC100',
+        date: '2025-11-05',
+        from: 'MIA',
+        to: 'ATL',
+        departTime: '13:30',
+        arriveTime: '15:10',
+        status: 'delayed'
+      }
+    ]
+  }
 ]
