@@ -3,6 +3,7 @@ import SearchBox from '../components/SearchBox'
 import ThemeToggle from '../components/ThemeToggle'
 import { useLocation } from 'wouter'
 import { MOCK_PASSENGERS } from '../data/mock'
+import HeartLogo from '../assets/Heart_UI_Logo.svg'
 
 export default function SearchPage(){
   const [,navigate] = useLocation()
@@ -18,7 +19,7 @@ export default function SearchPage(){
     <div className="min-h-screen flex flex-col items-center pt-10">
       <header className="w-full max-w-3xl flex items-center justify-between px-4 mb-8">
         <div className="flex items-center gap-3">
-          <div className="logo-square">H</div>
+          <img src={HeartLogo} alt="HEART logo" className="w-10 h-10 rounded-md" />
           <div className="text-lg font-semibold">HEART</div>
         </div>
         <ThemeToggle />
@@ -26,7 +27,7 @@ export default function SearchPage(){
 
       <main className="w-full max-w-3xl text-center">
   <h1 className="text-2xl font-semibold">HEART - Help Engine for Automated Rebooking & Travel</h1>
-        <p className="text-muted mt-2">Search for a passenger to begin support</p>
+        <p className="text-muted mt-2">Search for a passenger to begin magic!</p>
 
         <div className="mt-8">
           <SearchBox onSearch={handleSearch} />
