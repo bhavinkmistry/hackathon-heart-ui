@@ -27,8 +27,7 @@ export default function SupportChatPage(){
         const form = new FormData()
         form.append('file', blob, 'recording.webm')
         try{
-          const apiBase = import.meta.env.VITE_API_BASE || ''
-          const res = await fetch(`${apiBase}/api/whisper`, { method: 'POST', body: form })
+          const res = await fetch('http://localhost:3001/api/whisper', { method: 'POST', body: form })
           if(!res.ok) throw new Error(await res.text())
           const json = await res.json()
           const text = json.transcript || json.text || ''

@@ -17,6 +17,13 @@ export default function ChatInterface({onSend, registerAppend}:{onSend?:(m:Messa
     {id:'m2',from:'agent',text:'Sure — can I have your booking reference?',ts:'09:13'}
   ])
 
+  const playText = (text: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text)
+      speechSynthesis.speak(utterance)
+    }
+  }
+
   const [input,setInput] = React.useState('')
   const [typing,setTyping] = React.useState<{who:Sender, val:boolean}>({who:'assistant', val:false})
   const [suggestions,setSuggestions] = React.useState<Suggestion[]>([])
@@ -117,7 +124,12 @@ export default function ChatInterface({onSend, registerAppend}:{onSend?:(m:Messa
       <div className="flex-1 overflow-auto p-4 space-y-3">
         {messages.map(m=> (
           <div key={m.id} className={`max-w-[80%] ${m.from==='agent' ? 'bg-white self-start' : m.from==='passenger' ? 'bg-primary-strong text-white self-end' : 'bg-gray-100 self-start'} p-3 rounded-lg`}>
-            <div className={m.from==='agent' ? 'text-sm text-gray-800' : m.from==='passenger' ? 'text-sm text-white' : 'text-sm text-gray-800'}>{m.text}</div>
+            <div className="flex items-start justify-between gap-2">
+              <div className={m.from==='agent' ? 'text-sm text-gray-800' : m.from==='passenger' ? 'text-sm text-white' : 'text-sm text-gray-800'}>{m.text}</div>
+              {m.from === 'assistant' && (
+                <button onClick={() => playText(m.text)} aria-label="Play assistant reply" className="ml-2 px-2 py-1 border rounded text-sm">Play</button>
+              )}
+            </div>
             <div className="text-xs text-gray-500 mt-1">{m.ts}</div>
           </div>
         ))}

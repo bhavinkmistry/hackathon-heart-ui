@@ -44,6 +44,26 @@ npm run dev -- --host --port 5173
 
 - If you see an npm audit warning, it's usually safe for local dev. To address advisories, upgrade dependencies carefully (for example, Vite v7+ fixes a reported moderate advisory but is a semver-major change).
 
+## Voice Search with OpenAI Whisper
+
+The search box now includes voice input functionality using OpenAI Whisper:
+
+1. Set up your OpenAI API key:
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your OpenAI API key
+   ```
+
+2. Start the backend server:
+   ```bash
+   cd server
+   npm install
+   npm start
+   ```
+
+3. Click the microphone button in the search box to record voice input
+4. The audio will be transcribed using OpenAI Whisper and populate the search field
+
 ## Mock data / search example
 
 - The app uses a small mock data file at `src/data/mock.ts`. To quickly find the demo passenger type `Bhavin` into the search box (the mocked passenger is `Bhavin Mistry`).
