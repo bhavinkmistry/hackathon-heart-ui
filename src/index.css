@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root{
+  --primary: 216 92% 45%;
+  --primary-strong: 216 92% 40%;
+  --accent-red: 7 85% 55%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,body,#root{height:100%}
+body{
+  @apply bg-gray-50 text-gray-900 font-sans;
+}
+
+.dark body{
+  background-color:#0f172a; /* slate-900 */
+  color: #e6eef8; /* light text */
+}
+
+.dark .logo-square{background-color:hsl(var(--primary));filter:brightness(0.9)}
+.dark .bg-white{background-color:#0b1220}
+.dark .text-muted{color:#94a3b8}
+
+.logo-square{
+  width:40px;height:40px;border-radius:8px;background-color:rgb(var(--primary));display:flex;align-items:center;justify-content:center;color:white;font-weight:700
+}
+
+.pill-active{background-color: hsl(var(--primary)); color: white}
+
+/* Accessible focus-visible ring for interactive elements */
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.22);
+  border-radius: 8px;
+}
+
+/* stronger hover affordance for primary CTAs */
+button.bg-primary-strong, button.bg-primary { transition: filter .12s ease, transform .06s ease; }
+button.bg-primary-strong:hover, button.bg-primary:hover { transform: translateY(-1px); filter:brightness(1.03); }
+
+/* Dark mode contrast tweaks */
+.dark body{
+  background-color:#071026; /* darker slate to increase contrast */
+  color: #e6eef8;
+}
+.dark .logo-square{background-color:hsl(var(--primary-strong));filter:brightness(0.95)}
+.dark .bg-white{background-color:#071427}
+.dark .text-muted{color:#94a3b8}
+.dark .bg-primary-strong{background-color: hsl(var(--primary-strong));}
+.dark .text-primary-strong{color: hsl(var(--primary-strong));}
+.dark .bg-accent-red{background-color: hsl(var(--accent-red));}
+.dark .text-accent-red{color: hsl(var(--accent-red));}
