@@ -16,7 +16,7 @@ export default function SearchPage(){
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center pt-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 dark:from-gray-900 dark:to-gray-800 flex flex-col items-center pt-10">
       <header className="w-full max-w-3xl flex items-center justify-between px-4 mb-8">
         <div className="flex items-center gap-3">
           <img src={HeartLogo} alt="HEART logo" className="rounded-md max-w-full h-auto" />
@@ -26,10 +26,10 @@ export default function SearchPage(){
       </header>
 
       <main className="w-full max-w-3xl text-center">
-  <h1 className="text-2xl font-semibold">Help Engine for Automated Rebooking & Travel</h1>
-        <p className="text-muted mt-2">Search for a passenger to begin magic!</p>
+        <h1 className="text-3xl font-bold text-blue-700 mb-2">Help Engine for Automated Rebooking & Travel</h1>
+        <p className="text-gray-600 dark:text-gray-300 mt-2 mb-8">Search for a passenger to begin magic!</p>
 
-        <div className="mt-8">
+        <div className="bg-white dark:bg-gray-800 border-2 border-red-500 rounded-2xl p-8 shadow-xl">
           <SearchBox onSearch={handleSearch} />
         </div>
       </main>

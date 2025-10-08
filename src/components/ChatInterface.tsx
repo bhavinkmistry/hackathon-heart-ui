@@ -148,10 +148,10 @@ export default function ChatInterface({onSend, registerAppend}:{onSend?:(m:Messa
       </div>
 
       {/* Suggestions panel */}
-      <div className="p-3 border-t bg-white">
+      <div className="p-3 border-t bg-white dark:bg-gray-800">
         {suggestions.length > 0 && (
           <div className="mb-3">
-            <div className="text-sm font-semibold mb-2">AI Suggestions</div>
+            <div className="text-sm font-semibold mb-2 text-gray-900 dark:text-white">AI Suggestions</div>
             <div className="flex gap-2 flex-wrap">
               {suggestions.map(s=> (
                 <button key={s.id} onClick={()=> setSelectedSuggestion(s.id)} className={`px-3 py-1 rounded-full border ${selectedSuggestion===s.id? 'bg-primary-strong text-white' : 'bg-gray-100'}`}>
@@ -174,7 +174,7 @@ export default function ChatInterface({onSend, registerAppend}:{onSend?:(m:Messa
         )}
 
         <div className="flex gap-2">
-          <textarea value={input} onChange={e=>setInput(e.target.value)} className="flex-1 rounded-md p-2 border" rows={2} />
+          <textarea value={input} onChange={e=>setInput(e.target.value)} className="flex-1 rounded-md p-2 border bg-white dark:bg-gray-700 text-gray-900 dark:text-white" rows={2} />
           <div className="flex flex-col gap-2">
             <button onClick={send} className="px-4 bg-primary-strong hover:bg-primary text-white rounded-md">Send</button>
             <button onClick={()=>{

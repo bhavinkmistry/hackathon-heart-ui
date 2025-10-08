@@ -85,7 +85,7 @@ export default function VoiceInput({ onTranscription, disabled }: VoiceInputProp
       className={`p-3 rounded-full transition-colors ${
         isRecording
           ? 'bg-red-500 hover:bg-red-600 animate-pulse'
-          : 'bg-blue-500 hover:bg-blue-600'
+          : 'bg-blue-700 hover:bg-blue-800'
       } ${disabled || isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
       title={isRecording ? 'Stop recording' : 'Start voice recording'}
     >

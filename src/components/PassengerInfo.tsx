@@ -19,9 +19,8 @@ export default function PassengerInfo({p}:{p:Passenger}){
   ]
   return (
     <div className="space-y-4">
-      <div className="bg-white p-4 rounded-md shadow">
+      <div className="bg-white p-4 rounded-md shadow border border-gray-400">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-md bg-gray-100 flex items-center justify-center font-semibold">AG</div>
           <div>
             <div className="text-lg font-semibold">{p.name}</div>
             <div className="text-sm text-muted">{p.email} · {p.phone}</div>
@@ -31,8 +30,8 @@ export default function PassengerInfo({p}:{p:Passenger}){
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded-md shadow">
-        <h4 className="font-semibold mb-2">Customer Flights</h4>
+      <div className="bg-white p-4 rounded-md shadow border border-gray-400">
+        <h4 className="font-semibold mb-2 text-red-500">Customer Flights</h4>
         <div className="space-y-2">
           {p.flights.map(f=> {
             // determine flight timing: past, within 24h, future
@@ -68,9 +67,9 @@ export default function PassengerInfo({p}:{p:Passenger}){
       </div>
 
       {/* Customer Behaviors */}
-      <div className="bg-white p-4 rounded-md shadow">
+      <div className="bg-white p-4 rounded-md shadow border border-gray-400">
         <button className="w-full text-left flex items-center justify-between" onClick={()=>setOpenSection(s=>({...s,behaviors:!s.behaviors}))}>
-          <div className="font-semibold">Customer Behaviors</div>
+          <div className="font-semibold text-red-500">Customer Behaviors</div>
           <div className="text-sm text-muted">{openSection.behaviors ? 'Collapse' : 'Expand'}</div>
         </button>
         {openSection.behaviors && (
@@ -86,9 +85,9 @@ export default function PassengerInfo({p}:{p:Passenger}){
       </div>
 
       {/* Suggested Options */}
-      <div className="bg-white p-4 rounded-md shadow">
+      <div className="bg-white p-4 rounded-md shadow border border-gray-400">
         <button className="w-full text-left flex items-center justify-between" onClick={()=>setOpenSection(s=>({...s,suggestions:!s.suggestions}))}>
-          <div className="font-semibold">Suggested Options</div>
+          <div className="font-semibold text-red-500">Suggested Options</div>
           <div className="text-sm text-muted">{openSection.suggestions ? 'Collapse' : 'Expand'}</div>
         </button>
         {openSection.suggestions && (
