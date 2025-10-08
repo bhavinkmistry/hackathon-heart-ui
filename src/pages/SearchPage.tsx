@@ -25,7 +25,7 @@ export default function SearchPage(){
       </header>
 
       <main className="w-full max-w-3xl text-center">
-        <h1 className="text-2xl font-semibold">Flight Reservation Assistance</h1>
+  <h1 className="text-2xl font-semibold">HEART - Help Engine for Automated Rebooking & Travel</h1>
         <p className="text-muted mt-2">Search for a passenger to begin support</p>
 
         <div className="mt-8">
