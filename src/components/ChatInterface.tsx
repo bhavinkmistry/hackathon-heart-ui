@@ -11,7 +11,7 @@ type Message = {
 
 type Suggestion = { id: string; text: string }
 
-export default function ChatInterface({onSend}:{onSend?:(m:Message)=>void}){
+export default function ChatInterface({onSend, registerAppend}:{onSend?:(m:Message)=>void, registerAppend?:(fn:(text:string)=>void)=>void}){
   const [messages,setMessages] = React.useState<Message[]>([
     {id:'m1',from:'passenger',text:'Hi, I need help with my booking. My flight was delayed.',ts:'09:12'},
     {id:'m2',from:'agent',text:'Sure — can I have your booking reference?',ts:'09:13'}
@@ -48,14 +48,38 @@ export default function ChatInterface({onSend}:{onSend?:(m:Message)=>void}){
   function triggerAssistant(contextText:string){
     setTyping({who:'assistant', val:true})
     setSuggestions([])
-    setTimeout(()=>{
-      const sug = generateSuggestions(contextText)
-      setTyping({who:'assistant', val:false})
-      setSuggestions(sug)
-      // also add an assistant message summarizing suggestions
-      const assistMsg:Message = {id:Date.now().toString(), from:'assistant', text: `Suggested actions: ${sug.map(s=>s.text).slice(0,2).join(' · ')}`, ts: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-      setMessages(s=>[...s, assistMsg])
-    }, 900)
+    // call server-side chat to generate suggestions (if available), fallback to local mock
+    ;(async ()=>{
+      try{
+        const apiBase = import.meta.env.VITE_API_BASE || ''
+        const r = await fetch(`${apiBase}/api/chat`, {
+          method: 'POST', headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ messages: [{ role: 'user', content: contextText }] })
+        })
+        if(r.ok){
+          const json = await r.json()
+          const assistantText = json.choices?.[0]?.message?.content || ''
+          const assistMsg:Message = {id:Date.now().toString(), from:'assistant', text: assistantText, ts: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+          setMessages(s=>[...s, assistMsg])
+          // optional: parse assistantText into suggestions (naive split)
+          const parts = assistantText.split('\n').slice(0,5).map((t: string, i: number) => ({id: 'srv'+i, text: (t||'').slice(0,240)}))
+          setSuggestions(parts)
+        } else {
+          // fallback: local mock
+          const sug = generateSuggestions(contextText)
+          setSuggestions(sug)
+          const assistMsg:Message = {id:Date.now().toString(), from:'assistant', text: `Suggested actions: ${sug.map(s=>s.text).slice(0,2).join(' · ')}`, ts: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+          setMessages(s=>[...s, assistMsg])
+        }
+      }catch(e){
+        const sug = generateSuggestions(contextText)
+        setSuggestions(sug)
+        const assistMsg:Message = {id:Date.now().toString(), from:'assistant', text: `Suggested actions: ${sug.map(s=>s.text).slice(0,2).join(' · ')}`, ts: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+        setMessages(s=>[...s, assistMsg])
+      } finally {
+        setTyping({who:'assistant', val:false})
+      }
+    })()
   }
 
   // when agent sends a message, trigger assistant suggestions based on last passenger message
@@ -70,6 +94,15 @@ export default function ChatInterface({onSend}:{onSend?:(m:Message)=>void}){
     const lastPassenger = [...messages].reverse().find(x=> x.from==='passenger')
     triggerAssistant(lastPassenger ? lastPassenger.text : m.text)
   }
+
+  // allow parent to register a callback to append text into the draft
+  React.useEffect(()=>{
+    if(registerAppend){
+      registerAppend((text:string)=>{
+        setInput(s => (s && s.length > 0) ? `${s} ${text}` : text)
+      })
+    }
+  },[registerAppend])
 
   function sendSuggestionAsAgent(s:Suggestion){
     const m:Message = {id:Date.now().toString(), from:'agent', text:s.text, ts:new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}
